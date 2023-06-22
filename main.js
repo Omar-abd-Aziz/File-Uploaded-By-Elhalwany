@@ -178,10 +178,10 @@ document.querySelector(".uploadBtn").addEventListener("click",async ()=>{
 
     } else {
         
-        let ArrayOfFilesLinksOld = JSON.parse(localStorage.getItem("ArrayOfFilesLinks") || "[]");
+        // let ArrayOfFilesLinksOld = JSON.parse(localStorage.getItem("ArrayOfFilesLinks") || "[]");
         await uploadFiles(mainInput).then(ArrayOfFilesLinks=>{
 
-            ArrayOfFilesLinks=[...ArrayOfFilesLinks, ...mainPersonData.ArrayOfFilesLinks];
+            ArrayOfFilesLinks=[...ArrayOfFilesLinks, ...mainPersonData.ArrayOfFilesLinks || []];
 
             setDoc(doc(db,"accounts",`${mainPersonData.id}`),{
               ...mainPersonData,
