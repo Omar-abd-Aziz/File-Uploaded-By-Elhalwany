@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="shortcut icon" href="./images/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+
+</head>
+<body>
+
+    <div style="display: flex;justify-content: space-between;margin: 20px; font-family: sans-serif;">
+        <h1>
+            Hello 
+            <span class="PersonName" style="color: #005af0;"></span>
+        </h1>
+        <button class="signOut" style="background-color: darkred; border-radius: 15px; padding: 10px;">تسجيل الخروج</button>
+    </div>
+
+    <div class="container">
+        <div class="drop_box">
+
+            <h1 style="font-family: sans-serif; text-align: center;">File Upload By 
+                <a href="https://www.facebook.com/profile.php?id=100013753383562" target="_blank">Elhalwany</a>
+            </h1>
+            <p style="color: black;font-size: 25px;font-weight: 900;font-family: 'Poppins';">الحد الاقصي لحجم الملفات للرفع في المرة الواحدة 50 ميجا</p>
+            
+            <input type="file" hidden accept="*" id="mainInput" style="display:none;" multiple>
+            <label for="mainInput" class="btn" style="cursor: pointer; border-radius: 15px;">
+                Choose File
+            </label>
+            <br>
+            <button class="btn uploadBtn" style="font-weight: bold; cursor: pointer; border-radius: 15px;">Upload</button>
+
+        </div>
+    </div>
+
+    <br>
+    <br>
+
+    <!-- <div class="dadOfFilesLinks">
+
+    </div> -->
+
+    <div id="example-table">
+
+        <table class="fl-table" style="border: 2px solid; ">
+
+            <thead>
+                <tr>
+                    <th>نسخ</th>
+                    <th>الملف</th>
+                    <th>حذف</th>
+                </tr>
+            </thead>
+
+            <tbody class="dadOfFilesLinks">
+
+                <!-- <tr style="font-weight: 600;">
+
+                    <td>
+                        <a>
+                            <i title="نسخ لينك الملف" class="fa-sharp fa-solid fa-copy Copy-File-Link" style="font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a style="font-size: 25px;" href="https://firebasestorage.googleapis.com/v0/b/file-upload-d8004.appspot.com/o/1687426132886-as6.jpg?alt=media&amp;token=a63b8b96-1344-4c97-bf69-e1faf3019c81" target="_blank" style="display: inline-block; max-width: 80%; overflow: hidden; text-overflow: ellipsis;">as6.jpg</a>
+                    </td>
+                    <td>
+                        <a>
+                            <i title="حذف الملف" class="fa-sharp fa-solid fa-trash Delet-File" style="font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
+                        </a>
+                    </td>
+
+                </tr> -->
+          
+            </tbody>
+
+        </table>
+
+    </div>
+    
+</body>
+<script src="./js cdn/swalCdn.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-database.js"></script>
+<script type="module" src="./main.js"></script>
+</html>
