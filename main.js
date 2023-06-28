@@ -83,8 +83,8 @@ async function uploadFiles(input) {
   let bytes = AllInputFilesSize;
   AllInputFilesSize = bytesToMegaBytes(bytes);
   console.log(AllInputFilesSize);
-  if(AllInputFilesSize>50){
-    Swal.fire('عذرا حجم الملفات اكبر من 50 ميجا','','error',)
+  if(AllInputFilesSize>100){
+    Swal.fire('عذرا حجم الملفات اكبر من 100 ميجا','','error',)
   } else{
 
     Swal.fire({
@@ -114,6 +114,7 @@ async function uploadFiles(input) {
           .then(async snapshot => snapshot.ref.getDownloadURL())
           .then(async url => {
             ArrayOfFilesLinks.push({src: url,name: file.name});
+            setTheData([{src: url,name: file.name}]);
           })
           .catch(console.error);
       }; 
@@ -181,40 +182,7 @@ document.querySelector(".uploadBtn").addEventListener("click",async ()=>{
         // let ArrayOfFilesLinksOld = JSON.parse(localStorage.getItem("ArrayOfFilesLinks") || "[]");
         await uploadFiles(mainInput).then(ArrayOfFilesLinks=>{
 
-            ArrayOfFilesLinks=[...ArrayOfFilesLinks, ...mainPersonData.ArrayOfFilesLinks || []];
-
-            setDoc(doc(db,"accounts",`${mainPersonData.id}`),{
-              ...mainPersonData,
-              ArrayOfFilesLinks: ArrayOfFilesLinks,
-            }).then(e=>{
-              mainPersonData.ArrayOfFilesLinks=ArrayOfFilesLinks;
-              Swal.fire('تم الرفع','','success');
-            });
-
-
-            document.querySelector(".dadOfFilesLinks").innerHTML="";
-            ArrayOfFilesLinks.forEach(e=>{
-              document.querySelector(".dadOfFilesLinks").innerHTML+=`
-              <tr style="font-weight: 600;">
-          
-                <td>
-                  <a>
-                    <i title="نسخ لينك الملف" class="fa-sharp fa-solid fa-copy Copy-File-Link" data-link="${e.src}" style="font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
-                  </a>
-                </td>
-                <td style="max-width: 200px; overflow-x: scroll;">
-                  <a style="font-size: 25px;" href="${e.src}" target="_blank" style="display: inline-block; max-width: 80%; overflow: hidden; text-overflow: ellipsis;">${e.name}</a>
-                </td>
-                <td>
-                  <a>
-                    <i title="حذف الملف" class="fa-sharp fa-solid fa-trash Delet-File" data-link="${e.src}" data-id="${mainPersonData.id}" style="font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
-                  </a>
-                </td>
-          
-              </tr>
-              `;
-            });
-
+          Swal.fire('تم رفع جميع الملفات','','success');
 
         });
         
@@ -225,7 +193,57 @@ document.querySelector(".uploadBtn").addEventListener("click",async ()=>{
 
 
 
-  
+let i = 0;
+function setTheData(ArrayOfFilesLinks){
+  ArrayOfFilesLinks = [...ArrayOfFilesLinks, ...mainPersonData.ArrayOfFilesLinks || []];
+
+    setDoc(doc(db,"accounts",`${mainPersonData.id}`),{
+      ...mainPersonData,
+      ArrayOfFilesLinks: ArrayOfFilesLinks,
+    }).then(e=>{
+      mainPersonData.ArrayOfFilesLinks=ArrayOfFilesLinks;
+
+      i++;
+      
+      if(i===mainInput.files.length){
+        i=0;
+      } else{
+        Swal.fire({
+          title: `تم رفع ${i} ملف من اصل ${mainInput.files.length} ملفات`,
+          didOpen: () => {Swal.showLoading()}
+        });
+      };
+      
+      
+    });
+
+
+    document.querySelector(".dadOfFilesLinks").innerHTML="";
+    ArrayOfFilesLinks.forEach(e=>{
+    document.querySelector(".dadOfFilesLinks").innerHTML+=`
+        <tr style="font-weight: 600;">
+          
+          <td>
+            <a>
+              <i title="نسخ لينك الملف" class="fa-sharp fa-solid fa-copy Copy-File-Link" data-link="${e.src}" style="font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
+            </a>
+          </td>
+          <td style="max-width: 200px; overflow-x: scroll;">
+            <a style="font-size: 25px;" href="${e.src}" target="_blank" style="display: inline-block; max-width: 80%; overflow: hidden; text-overflow: ellipsis;">${e.name}</a>
+          </td>
+          <td>
+            <a>
+              <i title="حذف الملف" class="fa-sharp fa-solid fa-trash Delet-File" data-link="${e.src}" data-id="${mainPersonData.id}" style="font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
+            </a>
+          </td>
+          
+        </tr>
+    `;
+  });
+};
+
+
+
 
 
 

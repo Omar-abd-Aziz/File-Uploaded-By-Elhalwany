@@ -81,7 +81,7 @@ document.querySelector(".btn-sign-in").addEventListener("click",async()=>{
 
 /* start create account */
 
-document.querySelector(".btn-sign-up").addEventListener("click",()=>{
+document.querySelector(".btn-sign-up").addEventListener("click",async()=>{
     let username = document.querySelector(".username-up").value
     let password = document.querySelector(".password-up").value
     let password2 = document.querySelector(".password-up-2").value
@@ -105,28 +105,38 @@ document.querySelector(".btn-sign-up").addEventListener("click",()=>{
 
       let id = idGenerator();
 
-      setDoc(doc(db,"accounts",id),{
-        id: id,
-        name: name,
-        username: username,
-        password: password,
-        date: Date.now(),
-      }).then(e=>{
-        Swal.fire(
+      let q = query(collection(db, "accounts"), where("username", "==", `${username}`));
+
+      const querySnapshot = await getDocs(q);
+      if(querySnapshot.docs.length==0){
+        setDoc(doc(db,"accounts",id),{
+            id: id,
+            name: name,
+            username: username,
+            password: password,
+            date: Date.now(),
+        }).then(e=>{
+            Swal.fire(
             'تم انشاء الحساب',
             'يمكنك الان تسجيل الدخول',
             'success'
+          )
+        });
+      
+        document.querySelector(".username-up").value=""
+        document.querySelector(".password-up").value=""
+        document.querySelector(".password-up-2").value=""
+    
+        document.querySelector("#tab-1").click()
+      } else {
+        Swal.fire(
+            'الاسم موجود بالفعل',
+            'برجاء اختيار اسم اخر',
+            'error'
         )
-      });
-  
+      }
 
-      document.querySelector(".username-up").value=""
-      document.querySelector(".password-up").value=""
-      document.querySelector(".password-up-2").value=""
-
-
-
-      document.querySelector("#tab-1").click()
+      
 
     } else if(username!=""&&password!=password2) {
         Swal.fire("","The Two Password Should be the Same","error")

@@ -7,11 +7,22 @@
     <link rel="stylesheet" href="./style.css">
     <link rel="shortcut icon" href="./images/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
-
+    <link rel="stylesheet" href="./loading library/loading-bar.css">
+    <link rel="stylesheet" href="./loading library/loading-bar.min.css">
+    <style type="text/css">
+        
+    </style>
 </head>
 <body>
 
-    <div style="display: flex;justify-content: space-between;margin: 20px; font-family: sans-serif;">
+    <!-- <div
+        data-preset="bubble"
+        class="ldBar label-center"
+        data-value="35"
+    ></div> -->
+   
+
+    <div style="display: flex;justify-content: space-between;margin: 20px; font-family: sans-serif; font-size: 15px;">
         <h1>
             Hello 
             <span class="PersonName" style="color: #005af0;"></span>
@@ -25,7 +36,7 @@
             <h1 style="font-family: sans-serif; text-align: center;">File Upload By 
                 <a href="https://www.facebook.com/profile.php?id=100013753383562" target="_blank">Elhalwany</a>
             </h1>
-            <p style="color: black;font-size: 25px;font-weight: 900;font-family: 'Poppins';">الحد الاقصي لحجم الملفات للرفع في المرة الواحدة 50 ميجا</p>
+            <p style="color: black;font-size: 25px;font-weight: 900;font-family: 'Poppins'; text-align: center;">الحد الاقصي لحجم الملفات للرفع في المرة الواحدة 100 ميجا</p>
             
             <input type="file" hidden accept="*" id="mainInput" style="display:none;" multiple>
             <label for="mainInput" class="btn" style="cursor: pointer; border-radius: 15px;">
@@ -81,8 +92,14 @@
         </table>
 
     </div>
+
     
+
+        
+    <br><br>
 </body>
+<script src="./loading library/loading-bar.js"></script>
+<script src="./loading library/loading-bar.min.js"></script>
 <script src="./js cdn/swalCdn.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
