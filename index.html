@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
     <link rel="stylesheet" href="./loading library/loading-bar.css">
     <link rel="stylesheet" href="./loading library/loading-bar.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+
     <style type="text/css">
         
     </style>
@@ -22,28 +24,26 @@
     ></div> -->
    
 
-    <div style="display: flex;justify-content: space-between;margin: 20px; font-family: sans-serif; font-size: 15px;">
-        <h1>
-            Hello 
-            <span class="PersonName" style="color: #005af0;"></span>
-        </h1>
+    <div class="HelloDiv" style="display: flex;align-items: center; justify-content: space-between;margin: 20px; font-family: sans-serif; font-size: 15px;">
+        <h2>Hello <span class="PersonName">admin</span></h2>
         <button class="signOut" style="background-color: darkred; border-radius: 15px; padding: 10px;">تسجيل الخروج</button>
     </div>
 
     <div class="container">
         <div class="drop_box">
 
-            <h1 style="font-family: sans-serif; text-align: center;">File Upload By 
-                <a href="https://www.facebook.com/profile.php?id=100013753383562" target="_blank">Elhalwany</a>
-            </h1>
-            <p style="color: black;font-size: 25px;font-weight: 900;font-family: 'Poppins'; text-align: center;">الحد الاقصي لحجم الملفات للرفع في المرة الواحدة 100 ميجا</p>
+            <h1 style="font-family: sans-serif; text-align: center;">File Upload </h1>
+            
+            <a class="myName" href="https://www.facebook.com/profile.php?id=100013753383562">Made With <span style="color: #1161ee;">❤</span> By Omar Ehalwany</a>            </h1>
+
+            <p style="color: black;font-size: 25px;font-weight: 900;font-family: 'cairo'; text-align: center;">الحد الاقصي لحجم الملفات للرفع في المرة الواحدة 100 ميجا</p>
             
             <input type="file" hidden accept="*" id="mainInput" style="display:none;" multiple>
-            <label for="mainInput" class="btn" style="cursor: pointer; border-radius: 15px;">
+            <label for="mainInput" class="btn" style="margin: 15px; cursor: pointer; border-radius: 15px; font-family: sans-serif; font-weight: bold;font-size: 18px;">
                 Choose File
             </label>
-            <br>
-            <button class="btn uploadBtn" style="font-weight: bold; cursor: pointer; border-radius: 15px;">Upload</button>
+          
+            <button class="btn uploadBtn" style="font-family: sans-serif; font-weight: bold; cursor: pointer; border-radius: 15px; font-size: 18px;">Upload</button>
 
         </div>
     </div>
@@ -61,7 +61,7 @@
 
             <thead>
                 <tr>
-                    <th>نسخ</th>
+                    <th>تعديل</th>
                     <th>الملف</th>
                     <th>حذف</th>
                 </tr>

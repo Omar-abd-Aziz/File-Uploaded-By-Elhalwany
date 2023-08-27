@@ -5,8 +5,13 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: "cairo", "sans-serif";
 }
+
+:root{
+  --main-bg: radial-gradient(circle at top right, rgb(78, 78, 78) 0%, rgb(78, 78, 78) 1%,rgb(72, 72, 72) 1%, rgb(72, 72, 72) 10%,rgb(65, 65, 65) 10%, rgb(65, 65, 65) 22%,rgb(59, 59, 59) 22%, rgb(59, 59, 59) 23%,rgb(53, 53, 53) 23%, rgb(53, 53, 53) 28%,rgb(46, 46, 46) 28%, rgb(46, 46, 46) 37%,rgb(40, 40, 40) 37%, rgb(40, 40, 40) 100%);
+}
+
 
 .container {
   margin-top: 50px;
@@ -15,6 +20,43 @@
   display: flex;
   justify-content: center;
   background-color: #fcfcfc;
+}
+
+.swal2-input{
+  font-weight: bold;
+  border: 2px solid;
+  border-radius: 8px;
+  font-size: 20px;
+  font-family: cairo;
+}
+
+.myName{
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+  font-weight: bold;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+#example-table > table > thead > tr {
+  background: var(--main-bg);
+}
+
+.HelloDiv > h2 {
+  background: var(--main-bg) !important;
+  color: white;
+  padding: 0px 10px;
+  border-radius: 7px;
+}
+
+.PersonName{
+  background: white;
+  color: black !important;
+  padding: 0px 5px;
+  font-family: sans-serif;
+  border: none;
+  border-radius: 10px;
 }
 
 .card {
@@ -100,13 +142,14 @@
 
 .signOut{
   background-color: darkred;
-    border-radius: 15px;
-    padding: 10px;
-    color: white;
-    font-weight: bold;
-    font-size: 20px;
-    border: none;
-    cursor: pointer;
+  border: none;
+  border-radius: 15px;
+  padding: 10px;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
 }
 
 
@@ -137,7 +180,7 @@
     .fl-table th {
         text-align: center;
         padding: 8px;
-        border: 2px solid #0a1951;
+        border: 2px solid black;
         font-weight: bold;
     }
 
@@ -151,7 +194,7 @@
 
     .fl-table thead th {
         color: #ffffff;
-        background: #0a1951;
+        background: transparent;
     }
 
     .fl-table tr {

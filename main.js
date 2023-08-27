@@ -137,7 +137,7 @@ async function uploadFiles(input) {
 
 let ArrayOfFilesLinksOld = mainPersonData.ArrayOfFilesLinks || [];
 
-
+console.log(ArrayOfFilesLinksOld)
 ArrayOfFilesLinksOld.forEach(e=>{
     document.querySelector(".dadOfFilesLinks").innerHTML+=`
     <tr style="font-weight: 600;">
@@ -146,9 +146,12 @@ ArrayOfFilesLinksOld.forEach(e=>{
         <a>
           <i title="نسخ لينك الملف" class="fa-sharp fa-solid fa-copy Copy-File-Link" data-link="${e.src}" style="font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
         </a>
+        <a>
+          <i data-src="${e.src}" data-name="${e.name}" title="تغيير اسم الملف" class="fa-sharp fa-solid fa-edit Edit-File-Name" data-link="${e.src}" style="font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
+        </a>
       </td>
       <td style="max-width: 200px; overflow-x: scroll;">
-        <a style="font-size: 25px;" href="${e.src}" target="_blank" style="display: inline-block; max-width: 80%; overflow: hidden; text-overflow: ellipsis;">${e.name}</a>
+        <a class="fileName" style="font-size: 25px;" href="${e.src}" target="_blank" style="display: inline-block; max-width: 80%; overflow: hidden; text-overflow: ellipsis;">${e.name}</a>
       </td>
       <td>
         <a>
@@ -227,9 +230,12 @@ function setTheData(ArrayOfFilesLinks){
             <a>
               <i title="نسخ لينك الملف" class="fa-sharp fa-solid fa-copy Copy-File-Link" data-link="${e.src}" style="font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
             </a>
+            <a>
+              <i data-src="${e.src}" data-name="${e.name}" title="تغيير اسم الملف" class="fa-sharp fa-solid fa-edit Edit-File-Name" data-link="${e.src}" style="font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
+            </a>
           </td>
           <td style="max-width: 200px; overflow-x: scroll;">
-            <a style="font-size: 25px;" href="${e.src}" target="_blank" style="display: inline-block; max-width: 80%; overflow: hidden; text-overflow: ellipsis;">${e.name}</a>
+            <a class="fileName" style="font-size: 25px;" href="${e.src}" target="_blank" style="display: inline-block; max-width: 80%; overflow: hidden; text-overflow: ellipsis;">${e.name}</a>
           </td>
           <td>
             <a>
@@ -285,6 +291,73 @@ window.onclick=(e)=>{
   }
 
 
+  if([...e.target.classList].includes("Edit-File-Name")){
+
+    let BtnToChangeName=e.target;
+    let DivToChangeName=e.target.parentNode.parentNode.parentNode.querySelector(".fileName")
+    let FileSrc= BtnToChangeName.dataset.src;
+    let FileName= BtnToChangeName.dataset.name;
+
+
+
+    Swal.fire({
+      title: 'Change Name',
+      input: 'text',
+      inputValue: `${FileName.trim()}`,
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Save',
+      showLoaderOnConfirm: true,
+      preConfirm: async(newName) => {
+
+        Swal.fire({
+          title: 'Please Wait!',
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        });
+
+        newName=newName.trim();
+
+        if(newName!==''){
+
+          let fileToEdit=mainPersonData.ArrayOfFilesLinks.find(e=>e.src==FileSrc);
+          fileToEdit.name=newName;
+          console.log(mainPersonData.ArrayOfFilesLinks)
+          setDoc(doc(db, "accounts", `${mainPersonData.id}`), {
+            ...mainPersonData,
+            ArrayOfFilesLinks: mainPersonData.ArrayOfFilesLinks,
+          }).then(e=>{
+
+
+            DivToChangeName.textContent=`${newName}`;
+            BtnToChangeName.dataset.name=`${newName}`;
+            
+            Swal.fire(
+              'Done',
+              '',
+              'success'
+            );
+          })
+              
+        }else{
+          Swal.fire(
+            'Error',
+            '',
+            'error'
+          );
+        };
+          
+          
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    })
+
+  } 
+
+
 
   if([...e.target.classList].includes("Delet-File"))
   {
@@ -306,8 +379,8 @@ window.onclick=(e)=>{
     
           mainPersonData.ArrayOfFilesLinks = mainPersonData.ArrayOfFilesLinks.filter(obj => obj.src !== e.target.dataset.link);
 
-          console.log(e.target.dataset.link);
-          console.log(mainPersonData.ArrayOfFilesLinks);
+          // console.log(e.target.dataset.link);
+          // console.log(mainPersonData.ArrayOfFilesLinks);
 
 
           let firebaseStorageUrl = e.target.dataset.link
