@@ -38,7 +38,7 @@ let docId = await localStorage.getItem("file-upload-person-id");
 if(docId!==null&&docId.trim()!==''){
 
     mainPersonData=await getUserDataWithId(docId);
-    document.querySelector(".PersonName").textContent=`${mainPersonData.username}..`;
+    document.querySelector(".PersonName").textContent=`${mainPersonData.username}`;
     
 } else {
   location.href="./login/login.html"
@@ -114,6 +114,8 @@ async function uploadFiles(input) {
           .then(async snapshot => snapshot.ref.getDownloadURL())
           .then(async url => {
             ArrayOfFilesLinks.push({src: url,name: file.name});
+
+           
             setTheData([{src: url,name: file.name}]);
           })
           .catch(console.error);
@@ -138,35 +140,48 @@ async function uploadFiles(input) {
 let ArrayOfFilesLinksOld = mainPersonData.ArrayOfFilesLinks || [];
 
 console.log(ArrayOfFilesLinksOld)
-ArrayOfFilesLinksOld.forEach(e=>{
+
+
+
+showFiles(ArrayOfFilesLinksOld);
+
+
+
+
+function showFiles(array){
+   
+
+  document.querySelector(".numberOfFiles").textContent=`(${array.length})`;
+
+  array.forEach(e=>{
     document.querySelector(".dadOfFilesLinks").innerHTML+=`
-    <tr style="font-weight: 600;">
-
-      <td>
-        <a>
-          <i title="نسخ لينك الملف" class="fa-sharp fa-solid fa-copy Copy-File-Link" data-link="${e.src}" style="font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
-        </a>
-        <a>
-          <i data-src="${e.src}" data-name="${e.name}" title="تغيير اسم الملف" class="fa-sharp fa-solid fa-edit Edit-File-Name" data-link="${e.src}" style="font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
-        </a>
-      </td>
-      <td style="max-width: 200px; overflow-x: scroll;">
-        <a class="fileName" style="font-size: 25px;" href="${e.src}" target="_blank" style="display: inline-block; max-width: 80%; overflow: hidden; text-overflow: ellipsis;">${e.name}</a>
-      </td>
-      <td>
-        <a>
-          <i title="حذف الملف" class="fa-sharp fa-solid fa-trash Delet-File" data-link="${e.src}" data-id="${mainPersonData.id}" style="font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
-        </a>
-      </td>
-
-    </tr>
+        <tr style="font-weight: 600;">
+          
+          <td>
+            <a>
+              <i title="نسخ لينك الملف" class="fa-sharp fa-solid fa-copy Copy-File-Link" data-link="${e.src}" style="font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
+            </a>
+            <a>
+              <i data-src="${e.src}" data-name="${e.name}" title="تغيير اسم الملف" class="fa-sharp fa-solid fa-edit Edit-File-Name" data-link="${e.src}" style="font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
+            </a>
+          </td>
+          <td style="max-width: 200px; overflow-x: scroll;">
+            <a class="fileName" style="font-size: 25px;" href="${e.src}" target="_blank" style="display: inline-block; max-width: 80%; overflow: hidden; text-overflow: ellipsis;">${e.name}</a>
+          </td>
+          <td>
+            <a>
+              <i title="حذف الملف" class="fa-sharp fa-solid fa-trash Delet-File" data-link="${e.src}" data-id="${mainPersonData.id}" style="font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
+            </a>
+          </td>
+          
+        </tr>
     `;
-});
+  })
 
 
-
-
-
+  // document.querySelector("#mainInput").value="";
+  // console.log(document.querySelector("#mainInput").files);
+};
 
 
 
@@ -174,7 +189,24 @@ ArrayOfFilesLinksOld.forEach(e=>{
 
 let mainInput = document.querySelector("#mainInput");
 
+
+
+mainInput.addEventListener("change",()=>{
+
+  document.querySelector(".numberOfFilesSelect").textContent=`
+  
+  تم تحديد 
+  ${mainInput.files.length} 
+  ملف
+  
+  `;
+  document.querySelector(".numberOfFilesSelect").style.display="block";
+  // console.log(mainInput.files);
+})
+
 document.querySelector(".uploadBtn").addEventListener("click",async ()=>{
+
+
 
     if(mainInput.files[0]==undefined){
 
@@ -184,9 +216,10 @@ document.querySelector(".uploadBtn").addEventListener("click",async ()=>{
         
         // let ArrayOfFilesLinksOld = JSON.parse(localStorage.getItem("ArrayOfFilesLinks") || "[]");
         await uploadFiles(mainInput).then(ArrayOfFilesLinks=>{
-
+          
+          
           Swal.fire('تم رفع جميع الملفات','','success');
-
+       
         });
         
     };
@@ -210,6 +243,8 @@ function setTheData(ArrayOfFilesLinks){
       
       if(i===mainInput.files.length){
         i=0;
+        document.querySelector("#mainInput").value="";
+        document.querySelector(".numberOfFilesSelect").style.display="none";
       } else{
         Swal.fire({
           title: `تم رفع ${i} ملف من اصل ${mainInput.files.length} ملفات`,
@@ -222,30 +257,7 @@ function setTheData(ArrayOfFilesLinks){
 
 
     document.querySelector(".dadOfFilesLinks").innerHTML="";
-    ArrayOfFilesLinks.forEach(e=>{
-    document.querySelector(".dadOfFilesLinks").innerHTML+=`
-        <tr style="font-weight: 600;">
-          
-          <td>
-            <a>
-              <i title="نسخ لينك الملف" class="fa-sharp fa-solid fa-copy Copy-File-Link" data-link="${e.src}" style="font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
-            </a>
-            <a>
-              <i data-src="${e.src}" data-name="${e.name}" title="تغيير اسم الملف" class="fa-sharp fa-solid fa-edit Edit-File-Name" data-link="${e.src}" style="font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
-            </a>
-          </td>
-          <td style="max-width: 200px; overflow-x: scroll;">
-            <a class="fileName" style="font-size: 25px;" href="${e.src}" target="_blank" style="display: inline-block; max-width: 80%; overflow: hidden; text-overflow: ellipsis;">${e.name}</a>
-          </td>
-          <td>
-            <a>
-              <i title="حذف الملف" class="fa-sharp fa-solid fa-trash Delet-File" data-link="${e.src}" data-id="${mainPersonData.id}" style="font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
-            </a>
-          </td>
-          
-        </tr>
-    `;
-  });
+    showFiles(ArrayOfFilesLinks);
 };
 
 
@@ -267,7 +279,7 @@ document.querySelector(".signOut").addEventListener("click",()=>{
 
   function copy(text) {
 
-    console.log("copy done")
+    // console.log("copy done")
     
     let x = document.createElement('textarea')
     x.value=text;
@@ -325,7 +337,7 @@ window.onclick=(e)=>{
 
           let fileToEdit=mainPersonData.ArrayOfFilesLinks.find(e=>e.src==FileSrc);
           fileToEdit.name=newName;
-          console.log(mainPersonData.ArrayOfFilesLinks)
+          // console.log(mainPersonData.ArrayOfFilesLinks)
           setDoc(doc(db, "accounts", `${mainPersonData.id}`), {
             ...mainPersonData,
             ArrayOfFilesLinks: mainPersonData.ArrayOfFilesLinks,
@@ -404,6 +416,8 @@ window.onclick=(e)=>{
             ArrayOfFilesLinks: mainPersonData.ArrayOfFilesLinks,
           }).then(el=>{
             e.target.parentNode.parentNode.parentNode.remove();
+
+            document.querySelector(".numberOfFiles").textContent=`(${mainPersonData.ArrayOfFilesLinks.length})`
             Swal.fire('تم حذف الملف','','success');
           });
 
@@ -415,3 +429,11 @@ window.onclick=(e)=>{
   };
 
 };
+
+
+
+
+
+
+
+

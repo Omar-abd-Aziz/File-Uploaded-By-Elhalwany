@@ -38,6 +38,9 @@
 
             <p style="color: black;font-size: 25px;font-weight: 900;font-family: 'cairo'; text-align: center;">الحد الاقصي لحجم الملفات للرفع في المرة الواحدة 100 ميجا</p>
             
+
+            <p class="numberOfFilesSelect">تم تحديد 0 ملفات</p>
+
             <input type="file" hidden accept="*" id="mainInput" style="display:none;" multiple>
             <label for="mainInput" class="btn" style="margin: 15px; cursor: pointer; border-radius: 15px; font-family: sans-serif; font-weight: bold;font-size: 18px;">
                 Choose File
@@ -62,7 +65,10 @@
             <thead>
                 <tr>
                     <th>تعديل</th>
-                    <th>الملف</th>
+                    <th>
+                        الملفات
+                        <span class="numberOfFiles">0</span>
+                    </th>
                     <th>حذف</th>
                 </tr>
             </thead>
