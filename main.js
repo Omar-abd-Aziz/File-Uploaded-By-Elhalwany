@@ -159,10 +159,14 @@ function showFiles(array){
           
           <td>
             <a>
-              <i title="نسخ لينك الملف" class="fa-sharp fa-solid fa-copy Copy-File-Link" data-link="${e.src}" style="font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
+              <button style="background: transparent; border: none;">
+                <i title="نسخ لينك الملف" class="fa-sharp fa-solid fa-copy Copy-File-Link" data-link="${e.src}" style="font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
+              </button>
             </a>
             <a>
-              <i data-src="${e.src}" data-name="${e.name}" title="تغيير اسم الملف" class="fa-sharp fa-solid fa-edit Edit-File-Name" data-link="${e.src}" style="font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
+              <button style="background: transparent; border: none;">
+                <i data-src="${e.src}" data-name="${e.name}" title="تغيير اسم الملف" class="fa-sharp fa-solid fa-edit Edit-File-Name" data-link="${e.src}" style="font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
+              </button>
             </a>
           </td>
           <td style="max-width: 200px; overflow-x: scroll;">
@@ -170,7 +174,9 @@ function showFiles(array){
           </td>
           <td>
             <a>
-              <i title="حذف الملف" class="fa-sharp fa-solid fa-trash Delet-File" data-link="${e.src}" data-id="${mainPersonData.id}" style="font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
+              <button style="background: transparent; border: none;">
+                <i title="حذف الملف" class="fa-sharp fa-solid fa-trash Delet-File" data-link="${e.src}" data-id="${mainPersonData.id}" style="font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
+              </button>  
             </a>
           </td>
           
@@ -293,8 +299,7 @@ document.querySelector(".signOut").addEventListener("click",()=>{
   
 //end of copy text
 
-
-window.onclick=(e)=>{
+window.addEventListener("click",(e)=>{
 
   if([...e.target.classList].includes("Copy-File-Link"))
   {
@@ -428,7 +433,7 @@ window.onclick=(e)=>{
 
   };
 
-};
+})
 
 
 
