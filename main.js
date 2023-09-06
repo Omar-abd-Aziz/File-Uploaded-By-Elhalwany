@@ -311,7 +311,7 @@ window.addEventListener("click",(e)=>{
   if([...e.target.classList].includes("Edit-File-Name")){
 
     let BtnToChangeName=e.target;
-    let DivToChangeName=e.target.parentNode.parentNode.parentNode.querySelector(".fileName")
+    let DivToChangeName=e.target.parentNode.parentNode.parentNode.parentNode.querySelector(".fileName")
     let FileSrc= BtnToChangeName.dataset.src;
     let FileName= BtnToChangeName.dataset.name;
 
