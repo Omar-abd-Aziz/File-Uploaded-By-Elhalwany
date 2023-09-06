@@ -420,7 +420,7 @@ window.addEventListener("click",(e)=>{
             ...mainPersonData,
             ArrayOfFilesLinks: mainPersonData.ArrayOfFilesLinks,
           }).then(el=>{
-            e.target.parentNode.parentNode.parentNode.remove();
+            e.target.parentNode.parentNode.parentNode.parentNode.remove();
 
             document.querySelector(".numberOfFiles").textContent=`(${mainPersonData.ArrayOfFilesLinks.length})`
             Swal.fire('تم حذف الملف','','success');
