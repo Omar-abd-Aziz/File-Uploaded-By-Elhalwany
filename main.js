@@ -194,19 +194,21 @@ function showFiles(array){
 
 
 let mainInput = document.querySelector("#mainInput");
-
+let numberOfFilesSelect = document.querySelector(".numberOfFilesSelect");
+let restInput = document.querySelector(".restInput")
 
 
 mainInput.addEventListener("change",()=>{
 
-  document.querySelector(".numberOfFilesSelect").textContent=`
+  numberOfFilesSelect.textContent=`
   
   تم تحديد 
   ${mainInput.files.length} 
   ملف
   
   `;
-  document.querySelector(".numberOfFilesSelect").style.display="block";
+  numberOfFilesSelect.style.display="block";
+  restInput.style.display="block";
   // console.log(mainInput.files);
 })
 
@@ -249,8 +251,9 @@ function setTheData(ArrayOfFilesLinks){
       
       if(i===mainInput.files.length){
         i=0;
-        document.querySelector("#mainInput").value="";
-        document.querySelector(".numberOfFilesSelect").style.display="none";
+        mainInput.value="";
+        numberOfFilesSelect.style.display="none";
+        restInput.style.display="none";
       } else{
         Swal.fire({
           title: `تم رفع ${i} ملف من اصل ${mainInput.files.length} ملفات`,
@@ -300,6 +303,17 @@ document.querySelector(".signOut").addEventListener("click",()=>{
 //end of copy text
 
 window.addEventListener("click",(e)=>{
+
+  document.querySelector(".DivForDragFiles").style.display="none";
+
+  if([...e.target.classList].includes("restInput"))
+  {
+    mainInput.value=[];
+    numberOfFilesSelect.style.display="none";
+    restInput.style.display="none";
+    Swal.fire("Done","","success")
+  }
+
 
   if([...e.target.classList].includes("Copy-File-Link"))
   {
@@ -433,12 +447,54 @@ window.addEventListener("click",(e)=>{
 
   };
 
-})
+});
 
 
 
 
+/* start file upload drag and drob //////////////////*/
+
+let DivForDragFiles = document.querySelector(".DivForDragFiles");
+
+function showDivForDragFiles(){
+  DivForDragFiles.style.display="block";
+};
+
+function hideDivForDragFiles(){
+  DivForDragFiles.style.display="none";
+};
+
+
+let dropArea = document.querySelector('.drop_box')
+dropArea.addEventListener('dragenter', showDivForDragFiles, false)
+DivForDragFiles.addEventListener('dragleave', hideDivForDragFiles, false)
+
+
+let upload = document.getElementById('upload');
+
+function onFile() {
+  let files = upload.files;
+  DivForDragFiles.style.display="none";
+  mainInput.files=files;
+  numberOfFilesSelect.textContent=`
+  تم تحديد 
+  ${mainInput.files.length} 
+  ملف
+  `;
+  numberOfFilesSelect.style.display="block";
+  restInput.style.display="block";
+  console.log(files);
+}
+
+
+upload.addEventListener('dragdrop', function (e) {
+    onFile();
+}, false);
+
+upload.addEventListener('change', function (e) {
+    onFile();
+}, false);
 
 
 
-
+/* end file upload drag and drob //////////////////*/

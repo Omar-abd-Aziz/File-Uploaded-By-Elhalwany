@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Upload</title>
     <link rel="stylesheet" href="./style.css">
-    <link rel="shortcut icon" href="./images/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./images/logo.webp" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
     <link rel="stylesheet" href="./loading library/loading-bar.css">
     <link rel="stylesheet" href="./loading library/loading-bar.min.css">
@@ -42,10 +42,16 @@
             <p class="numberOfFilesSelect">تم تحديد 0 ملفات</p>
 
             <input type="file" hidden accept="*" id="mainInput" style="display:none;" multiple>
-            <label for="mainInput" class="btn" style="margin: 15px; cursor: pointer; border-radius: 15px; font-family: sans-serif; font-weight: bold;font-size: 18px;">
-                Choose File
-            </label>
-          
+
+            <div style="margin: 0px;display: flex;justify-content: space-around;align-items: center;">
+
+                <label for="mainInput" class="btn" style=" margin: 15px; cursor: pointer; border-radius: 15px; font-family: sans-serif; font-weight: bold;font-size: 18px;">
+                    Choose File
+                </label>
+              
+                <i title="حذف الملف" class="restInput fa-sharp fa-solid fa-trash" style="display: none; font-size: 25px; color: darkred; background: white; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
+    
+            </div>
             <button class="btn uploadBtn" style="font-family: sans-serif; font-weight: bold; cursor: pointer; border-radius: 15px; font-size: 18px;">Upload</button>
 
         </div>
@@ -99,7 +105,16 @@
 
     </div>
 
-    
+    <!-- <div class="DivForDragFiles ">
+        
+        Leave Filles Here...
+        
+    </div> -->
+
+    <div class="area DivForDragFiles">
+        <input type="file" id="upload" multiple />
+        <label for="upload"></label>
+    </div>
 
         
     <br><br>
