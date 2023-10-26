@@ -1,7 +1,4 @@
-import { firebaseConfig } from "./firebase.js";
-
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js';
-import { getFirestore, collection, query, where, getDocs,getDoc, setDoc, addDoc, doc,deleteDoc,onSnapshot,orderBy, limit,startAt,endAt } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-firestore.js';
+import {docName, initializeApp,firebaseConfig ,getFirestore,getCountFromServer, collection, query, where, getDocs,getDoc, setDoc, addDoc, doc,deleteDoc,onSnapshot,orderBy, limit,startAt,endAt } from './firebase.js';
 
 firebase.initializeApp(firebaseConfig);
 const app = initializeApp(firebaseConfig);
@@ -33,7 +30,7 @@ async function getUserDataWithId(id){
 /* 02 start check and get user doc */
 
 let mainPersonData;
-let docId = await localStorage.getItem("file-upload-person-id");
+let docId = await localStorage.getItem(`${docName}`);
 
 if(docId!==null&&docId.trim()!==''){
 
@@ -224,9 +221,15 @@ document.querySelector(".uploadBtn").addEventListener("click",async ()=>{
         
         // let ArrayOfFilesLinksOld = JSON.parse(localStorage.getItem("ArrayOfFilesLinks") || "[]");
         await uploadFiles(mainInput).then(ArrayOfFilesLinks=>{
+
+          if(ArrayOfFilesLinks==undefined){
+            // Swal.fire('عذرا حجم الملفات اكبر من 100 ميجا','','error')
+          } else{
+            Swal.fire('تم رفع جميع الملفات','','success');  
+          }
+
           
           
-          Swal.fire('تم رفع جميع الملفات','','success');
        
         });
         
@@ -277,7 +280,7 @@ function setTheData(ArrayOfFilesLinks){
 
 document.querySelector(".signOut").addEventListener("click",()=>{
 
-  localStorage.setItem("file-upload-person-id","");
+  localStorage.setItem(`${docName}`,"");
   location.href="./login/login.html"
 
 });
@@ -311,7 +314,7 @@ window.addEventListener("click",(e)=>{
     mainInput.value=[];
     numberOfFilesSelect.style.display="none";
     restInput.style.display="none";
-    Swal.fire("Done","","success")
+    // Swal.fire("Done","","success")
   }
 
 
