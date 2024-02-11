@@ -85,12 +85,7 @@ async function uploadFiles(input) {
   if (AllInputFilesSize > 100) {
     Swal.fire('عذرا حجم الملفات اكبر من 100 ميجا', '', 'error',)
   } else {
-    Swal.fire({
-      title: 'Please Wait!',
-      didOpen: () => {
-        Swal.showLoading()
-      }
-    });
+
 
     let ArrayOfFilesLinks = [];
 
@@ -103,7 +98,13 @@ async function uploadFiles(input) {
       Swal.fire({
         html: `
 
-        <h1 class="progressStuteTitle" style="font-size: 24px; text-align: center;">جاري رفع اول ملف من اصل ${mainInput.files.length} ملفات</h1>
+        <h1 class="progressStuteTitle" style="font-size: 24px; text-align: center;">
+
+        ${mainInput.files.length>1?`جاري رفع اول ملف من اصل ${mainInput.files.length} ملفات`:"جاري رفع الملف برجاء الانتظار"}
+        
+        
+        
+        </h1>
 
         <div class="progressDiv" style="display: flex; justify-content: center;">
         
@@ -114,7 +115,7 @@ async function uploadFiles(input) {
           Please Wait!
         </h2>
         `,
-        didOpen: () => {Swal.showLoading()}
+        showConfirmButton: false,
       });
 
       for (let i = 0; i < input.files.length; i++) {
@@ -139,7 +140,7 @@ async function uploadFiles(input) {
 
               document.querySelector(".progressDiv").innerHTML=`
               
-              <div class="ldBar label-center" data-value="1" style="height: 60px; width: 300px;"></div>
+              <div class="ldBar label-center" data-value="1" data-fill-background="black" style="height: 60px; width: 300px;"></div>
               
               `;
 

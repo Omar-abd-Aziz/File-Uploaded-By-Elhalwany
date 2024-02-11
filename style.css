@@ -312,6 +312,16 @@
     }
 
 
+.ldBar-label {
+  color: white !important;
+  font-weight: bold !important;
+  text-shadow: none !important;
+  /* background: #194fbba3 !important;
+  margin: 0;
+  padding: 0 10px;
+  border-radius: 15px; */
+}
+
 .fl-table{
   width: 98%;
   max-width: 1000px;
