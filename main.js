@@ -66,63 +66,113 @@ if(docId!==null&&docId.trim()!==''){
 
 /*  start function to upload files */
 
-async function uploadFiles(input) {
 
-  let AllInputFilesSize=0;
+async function uploadFiles(input) {
+  let AllInputFilesSize = 0;
 
   [...input.files].forEach(element => {
-    AllInputFilesSize+=element.size;
+    AllInputFilesSize += element.size;
   });
 
   function bytesToMegaBytes(bytes) {
     return bytes / (1024 * 1024);
-  }  
+  }
+
   let bytes = AllInputFilesSize;
   AllInputFilesSize = bytesToMegaBytes(bytes);
   console.log(AllInputFilesSize);
-  if(AllInputFilesSize>100){
-    Swal.fire('عذرا حجم الملفات اكبر من 100 ميجا','','error',)
-  } else{
 
+  if (AllInputFilesSize > 100) {
+    Swal.fire('عذرا حجم الملفات اكبر من 100 ميجا', '', 'error',)
+  } else {
     Swal.fire({
       title: 'Please Wait!',
-      didOpen: () => {Swal.showLoading()}
+      didOpen: () => {
+        Swal.showLoading()
+      }
     });
 
     let ArrayOfFilesLinks = [];
-     
-    if(ArrayOfFilesLinks==undefined){
-      ArrayOfFilesLinks=[];
+
+    if (ArrayOfFilesLinks == undefined) {
+      ArrayOfFilesLinks = [];
     };
-     
-    if(input.files[0]!==undefined){
-     
-      for(let i=0; i<input.files.length; i++){
-     
-        const ref = firebase.storage().ref();
-        const file =  input.files[i];
-        const name = +new Date() + "-" + file.name;
-        const metadata = {
+
+    if (input.files[0] !== undefined) {
+
+      Swal.fire({
+        html: `
+
+        <h1 class="progressStuteTitle" style="font-size: 24px; text-align: center;">جاري رفع اول ملف من اصل ${mainInput.files.length} ملفات</h1>
+
+        <div class="progressDiv" style="display: flex; justify-content: center;">
+        
+        </div>
+
+
+        <h2 style="text-align: center;">
+          Please Wait!
+        </h2>
+        `,
+        didOpen: () => {Swal.showLoading()}
+      });
+
+      for (let i = 0; i < input.files.length; i++) {
+        let ref = firebase.storage().ref();
+        let file = input.files[i];
+        let name = +new Date() + "-" + file.name;
+        let metadata = {
           contentType: file.type,
         };
-           
-        const task = ref.child(name).put(file, metadata);
-        await task
-          .then(async snapshot => snapshot.ref.getDownloadURL())
-          .then(async url => {
-            ArrayOfFilesLinks.push({src: url,name: file.name});
 
-           
-            setTheData([{src: url,name: file.name}]);
-          })
-          .catch(console.error);
-      }; 
+        let fileRef = ref.child(name);
+
+        let uploadTask = fileRef.put(file, metadata);
+
+        await new Promise((resolve, reject) => {
+
+          
+
+          uploadTask.on('state_changed',
+            function (snapshot) {
+              let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+              document.querySelector(".progressDiv").innerHTML=`
+              
+              <div class="ldBar label-center" data-value="1" style="height: 60px; width: 300px;"></div>
+              
+              `;
+
+              let bar = new ldBar(".ldBar", {
+                "preset": "stripe",
+                "value": progress.toFixed()
+              });
+
+            },
+            function (error) {
+              console.error('Error uploading file:', error);
+              reject(error);
+            },
+            async function () {
+              let url = await fileRef.getDownloadURL();
+              ArrayOfFilesLinks.push({
+                src: url,
+                name: name
+              });
+              setTheData([{src: url,  name: name}]);
+              resolve();
+            }
+          );
+        });
+      };
     };
-    return ArrayOfFilesLinks;
-  };
 
-  
-};
+    console.log("done");
+    return ArrayOfFilesLinks;
+  }
+}
+
+
   
 /* end function to upload Files */
 
@@ -240,7 +290,7 @@ document.querySelector(".uploadBtn").addEventListener("click",async ()=>{
 
 
 
-let i = 0;
+let i = 0; 
 function setTheData(ArrayOfFilesLinks){
   ArrayOfFilesLinks = [...ArrayOfFilesLinks, ...mainPersonData.ArrayOfFilesLinks || []];
 
@@ -258,10 +308,9 @@ function setTheData(ArrayOfFilesLinks){
         numberOfFilesSelect.style.display="none";
         restInput.style.display="none";
       } else{
-        Swal.fire({
-          title: `تم رفع ${i} ملف من اصل ${mainInput.files.length} ملفات`,
-          didOpen: () => {Swal.showLoading()}
-        });
+
+        document.querySelector(".progressStuteTitle").textContent=`تم رفع ${i} ملف من اصل ${mainInput.files.length} ملفات`;
+
       };
       
       
